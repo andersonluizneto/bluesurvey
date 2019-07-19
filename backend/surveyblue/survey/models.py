@@ -22,7 +22,8 @@ class Survey(models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT,
                                related_name="author")
     status = models.IntegerField(choices=STATUS)
-    questions = models.ManyToManyField(Question, through='Survey_Question')
+    questions = models.ManyToManyField(Question, through='Survey_Question',
+                                       blank=True)
     clients = models.ManyToManyField(User)
 
     def publish(self):
@@ -41,7 +42,7 @@ class Survey_Question(models.Model):
 
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    layout = models.IntegerField(choices=LAYOUT)
+    layout = models.IntegerField(choices=LAYOUT, null=True)
 
 
 class Answer(models.Model):
